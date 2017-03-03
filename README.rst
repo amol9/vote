@@ -13,15 +13,15 @@ Supported platforms
 Installlation
 =============
 
-To install via pip::
-  > pip install vote
+To install via pip:
+ `> pip install vote`
 
 
 Usage
 =====
 
-To vote on a reddit image poll::
-  > vote reddit_image_poll -i <reddit post id>
+To vote on a reddit image poll:
+ `> vote reddit_image_poll -i <reddit post id>`
 
 
 Download
