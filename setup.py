@@ -21,7 +21,7 @@ setup(
 	packages		= find_packages(),
 	include_package_data	= True,
 	scripts			= ['ez_setup.py'],
-	install_requires	= ['redlib>=1.5.6', 'redcmd>=1.2.10', 'htmq>=1.0.0', 'greencache>=1.0.0', 'requests>=2.10.0'],
+	install_requires	= ['redlib>=1.5.7', 'redcmd>=1.2.10', 'htmq>=1.0.0', 'greencache>=1.0.0', 'requests>=2.10.0'],
 	entry_points		= entry_points,
 	classifiers		= [
 					'Development Status :: 4 - Beta',

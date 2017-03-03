@@ -4,10 +4,13 @@ import json
 
 import requests
 
+from .version import __version__
+
 
 class RedditPost:
         base_url = "https://www.reddit.com/%s.json"
         cache_dir = 'reddit_cache'
+        user_agent = 'vote ' + __version__
 
         def __init__(self, post_id, cache=False, cache_dir=None):
                 self._post_id = post_id
@@ -30,8 +33,10 @@ class RedditPost:
                 url = self.base_url%self._post_id
                 print('getting reddit post: %s'%url)
 
-                response = requests.get(url)
-                self._cache_post_json(response.text)
+                response = requests.get(url, headers={'User-Agent' : self.user_agent})
+
+                if response.status_code == 200:
+                        self._cache_post_json(response.text)
 
                 return response.text
 
