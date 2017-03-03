@@ -23,11 +23,16 @@ class ImagePoll:
 
 
         def vote(self):
+                print(self._title)
+                poll_id = self._poll_url.split('/')[-1]
+
+                if self._strawpoll.already_voted(poll_id):
+                        print('already voted')
+                        return True
+                        
                 filepath = self._download_image()
                 self._show_image(filepath)
 
-                poll_id = self._poll_url.split('/')[-1]
-                print(self._title)
                 return self._strawpoll.vote(poll_id)
 
 
@@ -41,6 +46,7 @@ class ImagePoll:
                 if filepath is not None:
                         return filepath
 
+                print('getting image: %s'%self._image_url)
                 response = requests.get(self._image_url)
 
                 if not self._cache_images:

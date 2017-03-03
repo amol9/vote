@@ -15,6 +15,7 @@ g_debug = True
 
 Option = namedtuple('Option', ['title', 'value'])
 def dbg_print(s):
+        global g_debug
         if g_debug: print(s)
 
 
@@ -49,23 +50,9 @@ class StrawPoll:
                 self._store.set(poll_id, True)
 
 
-        def _already_voted(self, poll_id):
+        def already_voted(self, poll_id):
                 return self._store.get(poll_id)
 
-
-        def _save_cookies(self):
-                with open(self.cookies_filename, 'wb') as f:
-                        pickle.dump(requests.utils.dict_from_cookiejar(session.cookies), f)
-
-
-        def _load_cookies(self):
-                if not exists(self.cookies_filename):
-                        return None
-
-                with open(self.cookies_filename, 'rb') as f:
-                        cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
-                        return cookies
-            
 
         def _request(self, url, params=None, headers={}):
                 if self._session is None:
@@ -74,7 +61,6 @@ class StrawPoll:
                         if exists(self.cookies_filename):
                                 self._session.cookies.load()
 
-                #headers[] add common headers here
                 headers['User-Agent']   =  "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
                 headers['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -90,7 +76,7 @@ class StrawPoll:
 
 
         def vote(self, poll_id):
-                if self._already_voted(poll_id):
+                if self.already_voted(poll_id):
                         print('already voted on this poll (%s%s)'%(self.poll_page_base_url, poll_id))
                         return
 
@@ -113,8 +99,8 @@ class StrawPoll:
 
 
         def _get_page(self, poll_id):
-                dbg_print('getting poll page...')
                 url = self.poll_page_base_url + poll_id
+                print('getting poll page: %s'%url)
                 response = self._request(url)
                 return response.text
                 
@@ -165,7 +151,6 @@ class StrawPoll:
                 
                 url = self.poll_page_base_url + poll_id
 
-                print(params)
                 response = self._request(url, params=params, headers=headers)
 
                 j = json.loads(response.text)
