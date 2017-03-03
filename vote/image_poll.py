@@ -8,7 +8,7 @@ from .straw_poll import StrawPoll
 
 
 class ImagePoll:
-        cache_folder = 'images'
+        cache_folder = 'image_cache'
 
 
         def __init__(self, title, image_url, poll_url, cache_images=True, cache_folder=None):

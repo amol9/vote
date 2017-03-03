@@ -27,9 +27,9 @@ class StrawPollError(Exception):
 
 
 class StrawPoll:
-        cookies_filename = 'cookies'
+        cookies_filename = 'strawpoll_cookies'
         poll_page_base_url = "http://strawpoll.me/"
-        voted_list_filename = 'voted'
+        voted_list_filename = 'strawpoll_voted'
 
 
         def __init__(self, debug=False):
