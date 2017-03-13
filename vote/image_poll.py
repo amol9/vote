@@ -1,8 +1,9 @@
 from os.path import join as joinpath, exists
 from os import mkdir
+from subprocess import run
 
 import requests
-from redlib.api.system import sys_command
+from redlib.api.system import sys_command, is_windows, is_linux
 
 from .straw_poll import StrawPoll
 
@@ -37,7 +38,12 @@ class ImagePoll:
 
 
         def _show_image(self, filepath):
-                sys_command("cmd /c start %s"%filepath)
+                if is_windows():
+                        sys_command("cmd /c start %s"%filepath)
+                elif is_linux():
+                        run(("xdg-open %s"%filepath).split())
+                else:
+                        print('unsupported OS')
                 
 
         def _download_image(self):
